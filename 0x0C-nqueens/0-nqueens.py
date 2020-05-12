@@ -17,6 +17,7 @@ def save_result(board, n):
     board_cache.result.append(solution)
     print(solution)
 
+
 def save_to_cache(board, n, col):
     """save each prosible solution to cache
     """
@@ -32,6 +33,7 @@ def save_to_cache(board, n, col):
                 board_cache.put(key, x)
                 board[i][col] = 0
 
+
 def pop_from_cache(n):
     dic = board_cache.pop_lifo()
     a_key = [x for x in dic.keys()]
@@ -41,6 +43,7 @@ def pop_from_cache(n):
     board = dic[key]
     save_to_cache(board, n, col+1)
 
+
 def isSafe(board, n, row, col):
     """A function to check if a queen can be place on board[row][col]
     """
@@ -49,38 +52,18 @@ def isSafe(board, n, row, col):
         if board[row][i] == 1:
             return False
 
-    #check lower diagonal on left side
+    # check lower diagonal on left side
     for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
         if board[i][j] == 1:
             return False
 
-    #check upper diagonal on left side
+    # check upper diagonal on left side
     for i, j in zip(range(row, n, 1), range(col, -1, -1)):
         if board[i][j] == 1:
             return False
 
     return True
 
-def solveNQueens(board, n, col):
-    """backtracking recursively to solve NQueens problem
-    """
-    #recursion function exit point
-    if col >= n:
-        return True
-
-    #consider this column and try place Queen in all rows one by one
-    for i in range(n):
-        if isSafe(board, i, col):
-            #place this queen in board[i][col]
-            board[i][col] = 1
-            if solveNQueens(board, n, col + 1) == True:
-                return True
-
-            #if not a solution, then reset to 0
-            board[i][col] = 0
-
-    #if the Queen can not be placed in any row in this column, then False
-    return False
 
 if __name__ == "__main__":
 
@@ -99,6 +82,6 @@ if __name__ == "__main__":
 
     save_to_cache(board, n, 0)
 
-    #pop each possible frame to find out solution
+    # pop each possible frame to find out solution
     while len(board_cache.key_list) != 0:
         pop_from_cache(n)
